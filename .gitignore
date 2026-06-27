@@ -1,0 +1,21 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno (¡La seguridad primero!)
+.env
+.env.*
+
+# Archivos de build y caché de Next.js
+.next/
+out/
+build/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Prisma generado
+/src/generated/prisma

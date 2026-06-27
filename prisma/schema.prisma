@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("USER")
+  orders    Order[]  // <--- ESTA ES LA LÍNEA MÁGICA QUE FALTABA
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id              String      @id @default(uuid())
+  name            String      // Nombre del vino (ej. Gran Malbec Reserva)
+  description     String      @db.Text // Nota de cata / reseña extendida
+  aroma           String?     @db.Text // Detalles de aromas (ej. Frutos rojos, vainilla)
+  pairing         String?     @db.Text // Maridaje sugerido (ej. Carnes rojas, pastas)
+  price           Decimal     @db.Decimal(10, 2)
+  stock           Int
+  imageUrl        String
+  category        String      // Tinto, Blanco, Rosado, Espumante
+  strain          String      // Cepa: Malbec, Cabernet Sauvignon, Chardonnay, etc.
+  winery          String      // Bodega productora
+  year            Int         // Año de la cosecha
+  alcoholContent  Decimal?    @db.Decimal(4, 1) // Graduación alcohólica (ej. 14.5)
+  volume          Int         @default(750)     // Tamaño de la botella en ml (por defecto 750)
+  orderItems      OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  CANCELLED
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  total           Decimal     @db.Decimal(10, 2)
+  status          OrderStatus @default(PENDING)
+  stripePaymentId String?     @unique
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Decimal  @db.Decimal(10, 2)
+}
+model Review {
+  id        String   @id @default(uuid())
+  userName  String
+  content   String   @db.Text
+  rating    Int
+  createdAt DateTime @default(now())
+}
