@@ -8,7 +8,6 @@ const client = new MercadoPagoConfig({
 });
 
 export async function POST(request) {
- 
   console.log("🚀 EJECUTANDO EL CÓDIGO NUEVO DE MERCADO PAGO...");
 
   try {
@@ -40,8 +39,6 @@ export async function POST(request) {
       0,
     );
 
-  
-    
     const newOrder = await prisma.order.create({
       data: {
         userId: userId,
@@ -70,9 +67,12 @@ export async function POST(request) {
 
     const preference = new Preference(client);
 
+    // 🔥 AQUÍ ESTÁ EL CAMBIO: Tu dominio de producción
+    const DOMINIO = "https://cava-nueve-mcslmli0c-kelany-s-projects.vercel.app";
+
     console.log(
       "🔗 ENVIANDO ESTAS RUTAS A MP:",
-      `http://localhost:3000/checkout/success?orderId=${newOrder.id}`,
+      `${DOMINIO}/checkout/success?orderId=${newOrder.id}`,
     );
 
     const result = await preference.create({
@@ -80,9 +80,9 @@ export async function POST(request) {
         items: itemsMercadoPago,
         external_reference: newOrder.id,
         back_urls: {
-          success: `http://localhost:3000/checkout/success?orderId=${newOrder.id}`,
-          failure: "http://localhost:3000/checkout/failure",
-          pending: "http://localhost:3000/checkout/pending",
+          success: `${DOMINIO}/checkout/success?orderId=${newOrder.id}`,
+          failure: `${DOMINIO}/checkout/failure`,
+          pending: `${DOMINIO}/checkout/pending`,
         },
          auto_return: "approved", 
       },
