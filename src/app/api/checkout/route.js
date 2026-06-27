@@ -84,7 +84,7 @@ export async function POST(request) {
           failure: `${DOMINIO}/checkout/failure`,
           pending: `${DOMINIO}/checkout/pending`,
         },
-         auto_return: "approved", 
+        auto_return: "approved",
       },
     });
 
