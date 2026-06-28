@@ -71,7 +71,7 @@ export async function POST(request) {
     const DOMINIO = "https://cava-nueve-mcslmli0c-kelany-s-projects.vercel.app";
 
     console.log(
-      "🔗 ENVIANDO ESTAS RUTAS A MP:",
+      "🔗 ENVIANDO ESTAS ESTASS A MP:",
       `${DOMINIO}/checkout/success?orderId=${newOrder.id}`,
     );
 
