@@ -2,7 +2,7 @@
 
 > Plataforma e-commerce premium con flujos de pago nativos automatizados, navegación segmentada, sistema de reseñas en tiempo real y un dashboard administrativo completo.
 
-**🌐 Visitar E-Commerce Live:** [Haz clic aquí para ver el proyecto en producción](URL_DE_TU_DEPLOY)
+**🌐 Visitar E-Commerce Live:** [cava-nueve-k.vercel.app](https://cava-nueve-k.vercel.app/)
 
 ## 🚀 Mi Rol y Stack Tecnológico
 
